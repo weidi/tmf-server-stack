@@ -14,7 +14,7 @@ services:
       - 3450:3450
       - 3450:3450/udp
   mysql:
-    image: mysql:5.5
+    image: mysql:5.6
     volumes:
       - ./mysql:/var/lib/mysql
     environment:
@@ -23,7 +23,7 @@ services:
       MYSQL_USER: tmf
       MYSQL_PASSWORD: tmfpass
   xaseco:
-    image: xaseco:latest
+    image: toprock/tmserver:xaseco_alpine
     depends_on:
       - "tmserver"
       - "mysql"
