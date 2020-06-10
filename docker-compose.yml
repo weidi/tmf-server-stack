@@ -9,6 +9,8 @@ services:
     environment:
       SERVER_NAME: My server # if you want colours be warned that $ needs to be escaped by $ in Docker
       SERVER_DESC: Let's race
+      SERVER_SA_PASSWORD: SuperAdmin
+      SERVER_ADM_PASSWORD: Admin
     ports:
       - 2350:2350
       - 3450:3450

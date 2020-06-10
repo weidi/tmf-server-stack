@@ -5,7 +5,7 @@ Have docker and docker-compose installed.
 
 Build the xaseco alpine image:
 ```
-docker build -t toprock/tmserver:xaseco_alpine -f .\xaseco\Dockerfile.alpine .\xaseco\
+$ docker build -t toprock/tmserver:xaseco -f .\xaseco\Dockerfile .\xaseco\
 ```
 
 
@@ -13,11 +13,4 @@ Configure your server settings by editing the `docker-compose.yml` and the game 
 Run the stack:
 ```
 $ docker-compose up
-```
-
-Build the xaseco legacy image:
-```
-$ cd xaseco
-$ ./build-image.sh
-$ cd ..
 ```
