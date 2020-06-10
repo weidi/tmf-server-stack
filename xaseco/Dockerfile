@@ -1,11 +1,11 @@
 # PHP 5 is mandatory to run aseco
-FROM php:5.3-apache
+FROM alpine:3.8
 
 ARG MYSQL_SERVER='mysql'
 ARG MYSQL_LOGIN='tmf'
 ARG MYSQL_PASSWORD='tmfpass'
-ARG ASECO_MASTER_ADMIN='YOUR_TMF_LOGIN'
-ARG ASECO_ADMIN='YOUR_TMF_LOGIN'
+ARG ASECO_MASTER_ADMIN='MasterAdmin'
+ARG ASECO_ADMIN='Admin'
 ARG SERVER_SA_PASSWORD='SuperAdmin'
 ARG SERVER_IP='tmserver'
 
@@ -23,21 +23,19 @@ WORKDIR /home/tmf/xaseco
 
 # Allows this image to be able to wait for a DB to be ready
 COPY wait-for-it.sh .
-
-# Follow install instructions from http://www.gamers.org/tmf/quickstart.html#xaseco
+COPY startup.sh .
 COPY xaseco_116.zip .
-RUN apt-get update && apt-get install -y --force-yes unzip php5-mysql
-RUN unzip xaseco_116.zip -d ..
+# Follow install instructions from http://www.gamers.org/tmf/quickstart.html#xaseco
 
-RUN mv newinstall/*.xml .
-RUN mv newinstall/*.php ./includes/
+RUN apk update &&\
+	apk add unzip \
+	bash \
+	php5 \
+	php5-xml \
+	php5-mysql &&\
+	unzip xaseco_116.zip -d .. &&\
+	mv newinstall/*.xml . &&\
+	mv newinstall/*.php ./includes/ &&\
+	rm xaseco_116.zip
 
-COPY settings.sh .
-RUN ./settings.sh
-
-# Clean image
-RUN rm xaseco_116.zip
-RUN rm settings.sh
-RUN apt-get autoremove -y unzip
-
-CMD ["./wait-for-it.sh", "mysql:3306", "--", "php", "aseco.php", "TMF"]
+CMD ["./startup.sh"]

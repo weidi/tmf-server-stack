@@ -1,5 +1,6 @@
 #!/bin/sh
 echo "Setting ENV/ARG variables"
+
 sed -i "s/<mysql_login>YOUR_MYSQL_LOGIN/<mysql_login>${MYSQL_LOGIN}/" localdatabase.xml
 sed -i "s/<mysql_password>YOUR_MYSQL_PASSWORD/<mysql_password>${MYSQL_PASSWORD}/" localdatabase.xml
 sed -i "s/<mysql_server>localhost/<mysql_server>${MYSQL_SERVER}/" localdatabase.xml
@@ -9,3 +10,6 @@ sed -i "s/<ip>127.0.0.1/<ip>${SERVER_IP}/" config.xml
 sed -i "s/<\/admins>/<tmlogin>${ASECO_ADMIN}<\/tmlogin><\/admins>/" adminops.xml
 sed -i "s/\t<plugin>plugin.dedimania.php<\/plugin>/<\!--\t<plugin>plugin.dedimania.php<\/plugin> -->/" plugins.xml
 sed -i "s/\t<plugin>chat.dedimania.php<\/plugin>/<\!--\t<plugin>chat.dedimania.php<\/plugin> -->/" plugins.xml
+
+
+./wait-for-it.sh "mysql:3306" "--" "php5" "aseco.php" "TMF"

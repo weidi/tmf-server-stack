@@ -23,13 +23,15 @@ services:
       MYSQL_USER: tmf
       MYSQL_PASSWORD: tmfpass
   xaseco:
-    image: toprock/tmserver:xaseco_alpine
+    image: toprock/tmserver:xaseco
     depends_on:
       - "tmserver"
       - "mysql"
     environment:
-      MYSQL_SERVER: 'mysql'
-      MYSQL_LOGIN: tmf
-      MYSQL_PASSWORD: tmfpass
-      ASECO_MASTER_ADMIN: YOUR_TMF_LOGIN
-      SERVER_SA_PASSWORD: SuperAdmin
+      MYSQL_SERVER: 'mysql' #name like the service 
+      MYSQL_LOGIN: tmf # same as MYSQL_USER
+      MYSQL_PASSWORD: tmfpass # same as MYSQL_PASSWORD
+      ASECO_MASTER_ADMIN: YOUR_TMF_LOGIN_TM #Online account name for TMNF, wont work for offline accounts
+      ASECO_ADMIN: ADMIN_User_Login_TM #Online account name for TMNF, wont work for offline accounts
+      SERVER_SA_PASSWORD: SuperAdmin # SA Password configured in tmserver
+      SERVER_IP: tmserver #Set this to the service / hostname of timserver
